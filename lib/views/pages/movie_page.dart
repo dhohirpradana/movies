@@ -8,11 +8,11 @@ class MoviePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final movieController = Get.put(MovieController());
+    final movieController = Get.put(MovieController());
     return Scaffold(
       body: Center(
         child: GetX<MovieController>(
-          builder: (movieController) {
+          builder: (_) {
             if (movieController.popularList.isEmpty) {
               return const CircularProgressIndicator();
             } else {

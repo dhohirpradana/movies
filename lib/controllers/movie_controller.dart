@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:youtap_movie/models/movie/popular_model.dart';
 
+import '../statics/api.dart';
+
 class MovieController extends GetxController {
   var popularList = <Popular>[].obs;
   var upcomingList = <Popular>[].obs;
@@ -9,23 +11,16 @@ class MovieController extends GetxController {
 
   final dio = Dio();
 
-  final uriPopular =
-      "https://api.themoviedb.org/3/movie/popular?api_key=4a8d660fdeebedfe22bc20d751c367ac";
-  final uriNowPlaying =
-      "https://api.themoviedb.org/3/movie/now_playing?api_key=4a8d660fdeebedfe22bc20d751c367ac";
-  final uriUpcoming =
-      "https://api.themoviedb.org/3/movie/upcoming?api_key=4a8d660fdeebedfe22bc20d751c367ac";
-
   @override
   void onInit() {
-    fetchPopular(uriPopular);
-    fetchUpcoming(uriUpcoming);
-    fetchNowPlaying(uriNowPlaying);
+    fetchPopular(1);
+    fetchUpcoming(1);
+    fetchNowPlaying(1);
     super.onInit();
   }
 
-  void fetchPopular(url) async {
-    dio.get(url).then((value) {
+  void fetchPopular(int page) async {
+    dio.get("${BaseUrl.uriPopular}&page=$page").then((value) {
       var populars = value.data['results'];
       for (Map i in populars) {
         popularList.add(Popular.fromMap(i as Map<String, dynamic>));
@@ -33,8 +28,8 @@ class MovieController extends GetxController {
     }).catchError((error) => print(error));
   }
 
-  void fetchUpcoming(url) async {
-    dio.get(url).then((value) {
+  void fetchUpcoming(int page) async {
+    dio.get("${BaseUrl.uriUpcoming}&page=$page").then((value) {
       var upcomings = value.data['results'];
       for (Map i in upcomings) {
         upcomingList.add(Popular.fromMap(i as Map<String, dynamic>));
@@ -42,8 +37,8 @@ class MovieController extends GetxController {
     }).catchError((error) => print(error));
   }
 
-  void fetchNowPlaying(url) async {
-    dio.get(url).then((value) {
+  void fetchNowPlaying(int page) async {
+    dio.get("${BaseUrl.uriNowPlaying}&page=$page").then((value) {
       var nowPlayings = value.data['results'];
       for (Map i in nowPlayings) {
         nowPlayingList.add(Popular.fromMap(i as Map<String, dynamic>));
