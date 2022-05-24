@@ -1,5 +1,5 @@
 .dart_tool/
-android/
+# android/
 .idea/
 build/
 ios/
