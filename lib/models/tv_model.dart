@@ -1,30 +1,26 @@
 import 'dart:convert';
 
-class NowPlaying {
+class TV {
   final int id;
-  final bool adult;
-  final String title;
+  final String name;
   final double voteAverage;
   final String posterPath;
-  NowPlaying({
+  TV({
     required this.id,
-    required this.adult,
-    required this.title,
+    required this.name,
     required this.voteAverage,
     required this.posterPath,
   });
 
-  NowPlaying copyWith({
+  TV copyWith({
     int? id,
-    bool? adult,
-    String? title,
+    String? name,
     double? voteAverage,
     String? posterPath,
   }) {
-    return NowPlaying(
+    return TV(
       id: id ?? this.id,
-      adult: adult ?? this.adult,
-      title: title ?? this.title,
+      name: name ?? this.name,
       voteAverage: voteAverage ?? this.voteAverage,
       posterPath: posterPath ?? this.posterPath,
     );
@@ -33,18 +29,16 @@ class NowPlaying {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'adult': adult,
-      'title': title,
+      'name': name,
       'voteAverage': voteAverage,
       'posterPath': posterPath,
     };
   }
 
-  factory NowPlaying.fromMap(Map<String, dynamic> map) {
-    return NowPlaying(
+  factory TV.fromMap(Map<String, dynamic> map) {
+    return TV(
       id: map['id']?.toInt() ?? 0,
-      adult: map['adult'] ?? false,
-      title: map['title'] ?? '',
+      name: map['name'] ?? '',
       voteAverage: map['vote_average']?.toDouble() ?? 0.0,
       posterPath: map['poster_path'] ?? '',
     );
@@ -52,22 +46,20 @@ class NowPlaying {
 
   String toJson() => json.encode(toMap());
 
-  factory NowPlaying.fromJson(String source) =>
-      NowPlaying.fromMap(json.decode(source));
+  factory TV.fromJson(String source) => TV.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'NowPlaying(id: $id, adult: $adult, title: $title, voteAverage: $voteAverage, posterPath: $posterPath)';
+    return 'TV(id: $id, name: $name, voteAverage: $voteAverage, posterPath: $posterPath)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is NowPlaying &&
+    return other is TV &&
         other.id == id &&
-        other.adult == adult &&
-        other.title == title &&
+        other.name == name &&
         other.voteAverage == voteAverage &&
         other.posterPath == posterPath;
   }
@@ -75,8 +67,7 @@ class NowPlaying {
   @override
   int get hashCode {
     return id.hashCode ^
-        adult.hashCode ^
-        title.hashCode ^
+        name.hashCode ^
         voteAverage.hashCode ^
         posterPath.hashCode;
   }

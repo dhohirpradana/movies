@@ -1,26 +1,30 @@
 import 'dart:convert';
 
-class OnTheAirTV {
+class Movie {
   final int id;
-  final String name;
+  final bool adult;
+  final String title;
   final double voteAverage;
   final String posterPath;
-  OnTheAirTV({
+  Movie({
     required this.id,
-    required this.name,
+    required this.adult,
+    required this.title,
     required this.voteAverage,
     required this.posterPath,
   });
 
-  OnTheAirTV copyWith({
+  Movie copyWith({
     int? id,
-    String? name,
+    bool? adult,
+    String? title,
     double? voteAverage,
     String? posterPath,
   }) {
-    return OnTheAirTV(
+    return Movie(
       id: id ?? this.id,
-      name: name ?? this.name,
+      adult: adult ?? this.adult,
+      title: title ?? this.title,
       voteAverage: voteAverage ?? this.voteAverage,
       posterPath: posterPath ?? this.posterPath,
     );
@@ -29,16 +33,18 @@ class OnTheAirTV {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'name': name,
+      'adult': adult,
+      'title': title,
       'voteAverage': voteAverage,
       'posterPath': posterPath,
     };
   }
 
-  factory OnTheAirTV.fromMap(Map<String, dynamic> map) {
-    return OnTheAirTV(
+  factory Movie.fromMap(Map<String, dynamic> map) {
+    return Movie(
       id: map['id']?.toInt() ?? 0,
-      name: map['name'] ?? '',
+      adult: map['adult'] ?? false,
+      title: map['title'] ?? '',
       voteAverage: map['vote_average']?.toDouble() ?? 0.0,
       posterPath: map['poster_path'] ?? '',
     );
@@ -46,21 +52,21 @@ class OnTheAirTV {
 
   String toJson() => json.encode(toMap());
 
-  factory OnTheAirTV.fromJson(String source) =>
-      OnTheAirTV.fromMap(json.decode(source));
+  factory Movie.fromJson(String source) => Movie.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'OnTheAirTV(id: $id, name: $name, voteAverage: $voteAverage, posterPath: $posterPath)';
+    return 'Movie(id: $id, adult: $adult, title: $title, voteAverage: $voteAverage, posterPath: $posterPath)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is OnTheAirTV &&
+    return other is Movie &&
         other.id == id &&
-        other.name == name &&
+        other.adult == adult &&
+        other.title == title &&
         other.voteAverage == voteAverage &&
         other.posterPath == posterPath;
   }
@@ -68,7 +74,8 @@ class OnTheAirTV {
   @override
   int get hashCode {
     return id.hashCode ^
-        name.hashCode ^
+        adult.hashCode ^
+        title.hashCode ^
         voteAverage.hashCode ^
         posterPath.hashCode;
   }

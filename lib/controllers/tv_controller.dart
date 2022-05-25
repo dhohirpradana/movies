@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:dpilem/models/tv/on_the_air_tv_model.dart';
-import 'package:dpilem/models/tv/popular_tv_model.dart';
+import 'package:dpilem/models/tv_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../statics/api.dart';
 
 class TVController extends GetxController {
-  List<PopularTV> popularList = <PopularTV>[].obs;
-  List<OnTheAirTV> onTheAirList = <OnTheAirTV>[].obs;
+  List<TV> popularList = <TV>[].obs;
+  List<TV> onTheAirList = <TV>[].obs;
 
   int popularPage = 1;
   int onTheAirPage = 1;
@@ -26,7 +25,7 @@ class TVController extends GetxController {
     dio.get("${BaseUrl.uriPopularTv}&page=$page").then((value) {
       var pupulars = value.data['results'];
       for (Map i in pupulars) {
-        popularList.add(PopularTV.fromMap(i as Map<String, dynamic>));
+        popularList.add(TV.fromMap(i as Map<String, dynamic>));
       }
     });
   }
@@ -41,7 +40,7 @@ class TVController extends GetxController {
     dio.get("${BaseUrl.uriOnTheAirTv}&page=$page").then((value) {
       var onTheAirs = value.data['results'];
       for (Map i in onTheAirs) {
-        onTheAirList.add(OnTheAirTV.fromMap(i as Map<String, dynamic>));
+        onTheAirList.add(TV.fromMap(i as Map<String, dynamic>));
       }
     });
   }
