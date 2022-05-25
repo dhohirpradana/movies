@@ -1,29 +1,30 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dpilem/controllers/tv_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
 import '../../controllers/movie_controller.dart';
 
-class UpcomingWidget extends StatefulWidget {
-  const UpcomingWidget({Key? key}) : super(key: key);
+class PopularTVWidget extends StatefulWidget {
+  const PopularTVWidget({Key? key}) : super(key: key);
 
   @override
-  State<UpcomingWidget> createState() => _UpcomingWidgetState();
+  State<PopularTVWidget> createState() => _PopularTVWidgetState();
 }
 
-class _UpcomingWidgetState extends State<UpcomingWidget> {
-  final _movieController = Get.put(MovieController());
+class _PopularTVWidgetState extends State<PopularTVWidget> {
+  final _tvController = Get.put(TVController());
   final ScrollController _scrollController = ScrollController();
 
   bool isLoading = false;
 
-  void _getMoreUpcoming() async {
+  void _getMorePopular() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
-      _movieController.fetchMoreUpcoming();
+      _tvController.fetchMorePopular();
 
       setState(() {
         isLoading = false;
@@ -37,7 +38,7 @@ class _UpcomingWidgetState extends State<UpcomingWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMoreUpcoming();
+        _getMorePopular();
       }
     });
   }
@@ -52,7 +53,7 @@ class _UpcomingWidgetState extends State<UpcomingWidget> {
   Widget build(BuildContext context) {
     return GetX<MovieController>(
       builder: (_) {
-        if (_movieController.upcomingList.isEmpty) {
+        if (_tvController.popularList.isEmpty) {
           return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -64,10 +65,10 @@ class _UpcomingWidgetState extends State<UpcomingWidget> {
           );
         } else {
           return ListView.builder(
-            key: const PageStorageKey<String>('upcoming controller'),
+            key: const PageStorageKey<String>('popular tv controller'),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: _movieController.upcomingList.length,
+            itemCount: _tvController.popularList.length,
             itemBuilder: ((context, i) => SizedBox(
                   height: 300,
                   width: 150,
@@ -77,12 +78,12 @@ class _UpcomingWidgetState extends State<UpcomingWidget> {
                       CachedNetworkImage(
                           height: 300,
                           width: 150,
-                          cacheManager: CacheManager(Config("movieimage",
+                          cacheManager: CacheManager(Config("tvimage",
                               stalePeriod: const Duration(days: 2))),
                           memCacheHeight: 750,
                           fit: BoxFit.cover,
                           imageUrl: BaseUrl.tmdbImage +
-                              _movieController.upcomingList[i].posterPath,
+                              _tvController.popularList[i].posterPath,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => Center(
                                   child: CircularProgressIndicator(
@@ -109,15 +110,14 @@ class _UpcomingWidgetState extends State<UpcomingWidget> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      _movieController
-                                          .upcomingList[i].voteAverage
+                                      _tvController.popularList[i].voteAverage
                                           .toString(),
                                       style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      _movieController.upcomingList[i].title
+                                      _tvController.popularList[i].name
                                           .toString(),
                                       style: const TextStyle(fontSize: 18),
                                     ),

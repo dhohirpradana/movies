@@ -5,25 +5,25 @@ import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
 import '../../controllers/movie_controller.dart';
 
-class NowPlayingWidget extends StatefulWidget {
-  const NowPlayingWidget({Key? key}) : super(key: key);
+class UpcomingMovieWidget extends StatefulWidget {
+  const UpcomingMovieWidget({Key? key}) : super(key: key);
 
   @override
-  State<NowPlayingWidget> createState() => _NowPlayingWidgetState();
+  State<UpcomingMovieWidget> createState() => _UpcomingMovieWidgetState();
 }
 
-class _NowPlayingWidgetState extends State<NowPlayingWidget> {
+class _UpcomingMovieWidgetState extends State<UpcomingMovieWidget> {
   final _movieController = Get.put(MovieController());
   final ScrollController _scrollController = ScrollController();
 
   bool isLoading = false;
 
-  void _getMoreNowPlaying() async {
+  void _getMoreUpcoming() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
-      _movieController.fetchMoreNowPlaying();
+      _movieController.fetchMoreUpcoming();
 
       setState(() {
         isLoading = false;
@@ -37,7 +37,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMoreNowPlaying();
+        _getMoreUpcoming();
       }
     });
   }
@@ -52,7 +52,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
   Widget build(BuildContext context) {
     return GetX<MovieController>(
       builder: (_) {
-        if (_movieController.nowPlayingList.isEmpty) {
+        if (_movieController.upcomingList.isEmpty) {
           return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -64,10 +64,10 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
           );
         } else {
           return ListView.builder(
-            key: const PageStorageKey<String>('now playing controller'),
+            key: const PageStorageKey<String>('upcoming controller'),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: _movieController.nowPlayingList.length,
+            itemCount: _movieController.upcomingList.length,
             itemBuilder: ((context, i) => SizedBox(
                   height: 300,
                   width: 150,
@@ -82,7 +82,7 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
                           memCacheHeight: 750,
                           fit: BoxFit.cover,
                           imageUrl: BaseUrl.tmdbImage +
-                              _movieController.nowPlayingList[i].posterPath,
+                              _movieController.upcomingList[i].posterPath,
                           progressIndicatorBuilder:
                               (context, url, downloadProgress) => Center(
                                   child: CircularProgressIndicator(
@@ -110,14 +110,14 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
                                   children: [
                                     Text(
                                       _movieController
-                                          .nowPlayingList[i].voteAverage
+                                          .upcomingList[i].voteAverage
                                           .toString(),
                                       style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      _movieController.nowPlayingList[i].title
+                                      _movieController.upcomingList[i].title
                                           .toString(),
                                       style: const TextStyle(fontSize: 18),
                                     ),
