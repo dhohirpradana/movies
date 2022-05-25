@@ -5,6 +5,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
 import '../../controllers/movie_controller.dart';
+import '../pages/tv_detail_page.dart';
+import 'star_widget.dart';
 
 class PopularTVWidget extends StatefulWidget {
   const PopularTVWidget({Key? key}) : super(key: key);
@@ -72,60 +74,71 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
             itemBuilder: ((context, i) => SizedBox(
                   height: 300,
                   width: 150,
-                  child: Card(
-                      child: Stack(
-                    children: [
-                      CachedNetworkImage(
-                          height: 300,
-                          width: 150,
-                          cacheManager: CacheManager(Config("tvimage",
-                              stalePeriod: const Duration(days: 2))),
-                          memCacheHeight: 750,
-                          fit: BoxFit.cover,
-                          imageUrl: BaseUrl.tmdbImage +
-                              _tvController.popularList[i].posterPath,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                      value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error)),
-                      Align(
-                          alignment: FractionalOffset.bottomLeft,
-                          child: Container(
-                              width: 150,
-                              decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                    Colors.black,
-                                    Colors.transparent
-                                  ])),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      _tvController.popularList[i].voteAverage
-                                          .toString(),
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      _tvController.popularList[i].name
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                              )))
-                    ],
-                  )),
+                  child: InkWell(
+                    onTap: (() => Get.to(() =>
+                        TVDetailPage(id: _tvController.popularList[i].id))),
+                    child: Card(
+                        child: Stack(
+                      children: [
+                        CachedNetworkImage(
+                            height: 300,
+                            width: 150,
+                            cacheManager: CacheManager(Config("tvimage",
+                                stalePeriod: const Duration(days: 2))),
+                            memCacheHeight: 750,
+                            fit: BoxFit.cover,
+                            imageUrl: BaseUrl.tmdbImage +
+                                _tvController.popularList[i].posterPath,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error)),
+                        Align(
+                            alignment: FractionalOffset.bottomLeft,
+                            child: Container(
+                                width: 150,
+                                decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                      Colors.black,
+                                      Colors.transparent
+                                    ])),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        _tvController.popularList[i].name
+                                            .toString(),
+                                        style: const TextStyle(fontSize: 18),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 3),
+                                      IconTheme(
+                                          data: const IconThemeData(
+                                            color: Colors.amber,
+                                            size: 16,
+                                          ),
+                                          child: StarWidget(
+                                              value: _tvController
+                                                      .popularList[i]
+                                                      .voteAverage /
+                                                  2)),
+                                    ],
+                                  ),
+                                )))
+                      ],
+                    )),
+                  ),
                 )),
             controller: _scrollController,
           );

@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dpilem/views/pages/movie_detail_page.dart';
+import 'package:dpilem/views/widget/star_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
@@ -71,61 +73,72 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
             itemBuilder: ((context, i) => SizedBox(
                   height: 300,
                   width: 150,
-                  child: Card(
-                      child: Stack(
-                    children: [
-                      CachedNetworkImage(
-                          height: 300,
-                          width: 150,
-                          cacheManager: CacheManager(Config("movieimage",
-                              stalePeriod: const Duration(days: 2))),
-                          memCacheHeight: 750,
-                          fit: BoxFit.cover,
-                          imageUrl: BaseUrl.tmdbImage +
-                              _movieController.nowPlayingList[i].posterPath,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                      value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error)),
-                      Align(
-                          alignment: FractionalOffset.bottomLeft,
-                          child: Container(
-                              width: 150,
-                              decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                    Colors.black,
-                                    Colors.transparent
-                                  ])),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      _movieController
-                                          .nowPlayingList[i].voteAverage
-                                          .toString(),
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      _movieController.nowPlayingList[i].title
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                              )))
-                    ],
-                  )),
+                  child: InkWell(
+                    onTap: (() => Get.to(() => MovieDetailPage(
+                        id: _movieController.nowPlayingList[i].id))),
+                    child: Card(
+                        child: Stack(
+                      children: [
+                        CachedNetworkImage(
+                            height: 300,
+                            width: 150,
+                            cacheManager: CacheManager(Config("movieimage",
+                                stalePeriod: const Duration(days: 2))),
+                            memCacheHeight: 750,
+                            fit: BoxFit.cover,
+                            imageUrl: BaseUrl.tmdbImage +
+                                _movieController.nowPlayingList[i].posterPath,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error)),
+                        Align(
+                            alignment: FractionalOffset.bottomLeft,
+                            child: Container(
+                                height: 75,
+                                width: 150,
+                                decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                      Colors.black,
+                                      Colors.transparent
+                                    ])),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        _movieController.nowPlayingList[i].title
+                                            .toString(),
+                                        style: const TextStyle(fontSize: 18),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 3),
+                                      IconTheme(
+                                          data: const IconThemeData(
+                                            color: Colors.amber,
+                                            size: 16,
+                                          ),
+                                          child: StarWidget(
+                                              value: _movieController
+                                                      .nowPlayingList[i]
+                                                      .voteAverage /
+                                                  2)),
+                                    ],
+                                  ),
+                                )))
+                      ],
+                    )),
+                  ),
                 )),
             controller: _scrollController,
           );

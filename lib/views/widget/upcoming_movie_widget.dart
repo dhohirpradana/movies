@@ -4,6 +4,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
 import '../../controllers/movie_controller.dart';
+import '../pages/movie_detail_page.dart';
+import 'star_widget.dart';
 
 class UpcomingMovieWidget extends StatefulWidget {
   const UpcomingMovieWidget({Key? key}) : super(key: key);
@@ -71,61 +73,70 @@ class _UpcomingMovieWidgetState extends State<UpcomingMovieWidget> {
             itemBuilder: ((context, i) => SizedBox(
                   height: 300,
                   width: 150,
-                  child: Card(
-                      child: Stack(
-                    children: [
-                      CachedNetworkImage(
-                          height: 300,
-                          width: 150,
-                          cacheManager: CacheManager(Config("movieimage",
-                              stalePeriod: const Duration(days: 2))),
-                          memCacheHeight: 750,
-                          fit: BoxFit.cover,
-                          imageUrl: BaseUrl.tmdbImage +
-                              _movieController.upcomingList[i].posterPath,
-                          progressIndicatorBuilder:
-                              (context, url, downloadProgress) => Center(
-                                  child: CircularProgressIndicator(
-                                      value: downloadProgress.progress)),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error)),
-                      Align(
-                          alignment: FractionalOffset.bottomLeft,
-                          child: Container(
-                              width: 150,
-                              decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
-                                      colors: [
-                                    Colors.black,
-                                    Colors.transparent
-                                  ])),
-                              child: Padding(
-                                padding: const EdgeInsets.all(5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      _movieController
-                                          .upcomingList[i].voteAverage
-                                          .toString(),
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    Text(
-                                      _movieController.upcomingList[i].title
-                                          .toString(),
-                                      style: const TextStyle(fontSize: 18),
-                                    ),
-                                  ],
-                                ),
-                              )))
-                    ],
-                  )),
+                  child: InkWell(
+                    onTap: (() => Get.to(() => MovieDetailPage(
+                        id: _movieController.upcomingList[i].id))),
+                    child: Card(
+                        child: Stack(
+                      children: [
+                        CachedNetworkImage(
+                            height: 300,
+                            width: 150,
+                            cacheManager: CacheManager(Config("movieimage",
+                                stalePeriod: const Duration(days: 2))),
+                            memCacheHeight: 750,
+                            fit: BoxFit.cover,
+                            imageUrl: BaseUrl.tmdbImage +
+                                _movieController.upcomingList[i].posterPath,
+                            progressIndicatorBuilder:
+                                (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress)),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error)),
+                        Align(
+                            alignment: FractionalOffset.bottomLeft,
+                            child: Container(
+                                width: 150,
+                                decoration: const BoxDecoration(
+                                    gradient: LinearGradient(
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                        colors: [
+                                      Colors.black,
+                                      Colors.transparent
+                                    ])),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        _movieController.upcomingList[i].title,
+                                        style: const TextStyle(fontSize: 18),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      const SizedBox(height: 3),
+                                      IconTheme(
+                                          data: const IconThemeData(
+                                            color: Colors.amber,
+                                            size: 16,
+                                          ),
+                                          child: StarWidget(
+                                              value: _movieController
+                                                      .upcomingList[i]
+                                                      .voteAverage /
+                                                  2)),
+                                    ],
+                                  ),
+                                )))
+                      ],
+                    )),
+                  ),
                 )),
             controller: _scrollController,
           );

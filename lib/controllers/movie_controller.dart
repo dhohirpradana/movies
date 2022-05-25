@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:dpilem/models/movie_detail_model.dart';
 import 'package:dpilem/models/movie_model.dart';
+import 'package:dpilem/models/reviews_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +11,8 @@ class MovieController extends GetxController {
   List<Movie> popularList = <Movie>[].obs;
   List<Movie> upcomingList = <Movie>[].obs;
   List<Movie> nowPlayingList = <Movie>[].obs;
+  List<MovieDetail> detailList = <MovieDetail>[].obs;
+  List<Reviews> reviewsList = <Reviews>[].obs;
 
   int nowPlayingPage = 1;
   int popularPage = 1;
@@ -25,7 +29,7 @@ class MovieController extends GetxController {
   }
 
   void _fetchPopular(int page) async {
-    dio.get("${BaseUrl.uriPopular}&page=$page").then((value) {
+    dio.get("${BaseUrl.popularMovie}&page=$page").then((value) {
       var populars = value.data['results'];
       for (Map i in populars) {
         popularList.add(Movie.fromMap(i as Map<String, dynamic>));
@@ -39,8 +43,8 @@ class MovieController extends GetxController {
     popularPage += 1;
   }
 
-  void _fetchUpcoming(int page) async {
-    dio.get("${BaseUrl.uriUpcoming}&page=$page").then((value) {
+  void _fetchUpcoming(int page) {
+    dio.get("${BaseUrl.upcomingMovie}&page=$page").then((value) {
       var upcomings = value.data['results'];
       for (Map i in upcomings) {
         upcomingList.add(Movie.fromMap(i as Map<String, dynamic>));
@@ -54,8 +58,8 @@ class MovieController extends GetxController {
     upcomingPage += 1;
   }
 
-  void _fetchNowPlaying(int page) async {
-    dio.get("${BaseUrl.uriNowPlaying}&page=$page").then((value) {
+  void _fetchNowPlaying(int page) {
+    dio.get("${BaseUrl.nowPlayingMovie}&page=$page").then((value) {
       var nowPlayings = value.data['results'];
       for (Map i in nowPlayings) {
         nowPlayingList.add(Movie.fromMap(i as Map<String, dynamic>));
@@ -67,5 +71,24 @@ class MovieController extends GetxController {
     debugPrint("get more now playing");
     _fetchNowPlaying(nowPlayingPage + 1);
     nowPlayingPage += 1;
+  }
+
+  void getDetail(int id) {
+    dio.get(BaseUrl.detailMovie(id)).then((value) {
+      var detail = value.data;
+      detailList.add(MovieDetail.fromMap(detail));
+      // print(detailList);
+    });
+  }
+
+  void getReviews(int id) {
+    dio.get(BaseUrl.reviewsMovie(id)).then((value) {
+      var reviews = value.data['results'];
+      reviewsList.clear();
+      for (Map i in reviews) {
+        reviewsList.add(Reviews.fromMap(i as Map<String, dynamic>));
+      }
+      // print(reviewsList[0].authorDetails["avatar_path"]);
+    });
   }
 }

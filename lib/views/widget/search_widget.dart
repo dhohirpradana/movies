@@ -24,7 +24,7 @@ class SearchWidget extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(30)),
             borderSide: BorderSide(color: Colors.transparent, width: 2.0),
           ),
-          hintText: 'Search Movie',
+          hintText: 'Search',
         ),
       ),
     );
