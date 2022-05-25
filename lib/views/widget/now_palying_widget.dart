@@ -68,23 +68,65 @@ class _NowPlayingWidgetState extends State<NowPlayingWidget> {
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             itemCount: _movieController.nowPlayingList.length,
-            itemBuilder: ((context, i) => Card(
-                    child: SizedBox(
+            itemBuilder: ((context, i) => SizedBox(
+                  height: 300,
                   width: 150,
-                  child: CachedNetworkImage(
-                      cacheManager: CacheManager(Config("movieimage",
-                          stalePeriod: const Duration(days: 2))),
-                      memCacheHeight: 750,
-                      fit: BoxFit.cover,
-                      imageUrl: BaseUrl.tmdbImage +
-                          _movieController.nowPlayingList[i].posterPath,
-                      progressIndicatorBuilder:
-                          (context, url, downloadProgress) => Center(
-                              child: CircularProgressIndicator(
-                                  value: downloadProgress.progress)),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error)),
-                ))),
+                  child: Card(
+                      child: Stack(
+                    children: [
+                      CachedNetworkImage(
+                          height: 300,
+                          width: 150,
+                          cacheManager: CacheManager(Config("movieimage",
+                              stalePeriod: const Duration(days: 2))),
+                          memCacheHeight: 750,
+                          fit: BoxFit.cover,
+                          imageUrl: BaseUrl.tmdbImage +
+                              _movieController.nowPlayingList[i].posterPath,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                      value: downloadProgress.progress)),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error)),
+                      Align(
+                          alignment: FractionalOffset.bottomLeft,
+                          child: Container(
+                              width: 150,
+                              decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                      colors: [
+                                    Colors.black,
+                                    Colors.transparent
+                                  ])),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      _movieController
+                                          .nowPlayingList[i].voteAverage
+                                          .toString(),
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                    Text(
+                                      _movieController.nowPlayingList[i].title
+                                          .toString(),
+                                      style: const TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              )))
+                    ],
+                  )),
+                )),
             controller: _scrollController,
           );
         }

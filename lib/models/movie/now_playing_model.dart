@@ -45,7 +45,7 @@ class NowPlaying {
       id: map['id']?.toInt() ?? 0,
       adult: map['adult'] ?? false,
       title: map['title'] ?? '',
-      voteAverage: map['voteAverage']?.toDouble() ?? 0.0,
+      voteAverage: map['vote_average']?.toDouble() ?? 0.0,
       posterPath: map['poster_path'] ?? '',
     );
   }

@@ -14,11 +14,12 @@ class MoviePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.symmetric(horizontal: 14),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const SizedBox(height: 14),
                 Row(
                   children: [
                     const Text("Hello",
@@ -70,6 +71,7 @@ class MoviePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 const SizedBox(height: 300, child: UpcomingWidget()),
+                const SizedBox(height: 14)
               ],
             ),
           ),

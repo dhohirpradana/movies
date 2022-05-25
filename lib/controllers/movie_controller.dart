@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:dpilem/models/movie/now_playing_model.dart';
+import 'package:dpilem/models/movie/upcoming_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/models/movie/popular_model.dart';
@@ -7,12 +9,12 @@ import '../statics/api.dart';
 
 class MovieController extends GetxController {
   List<Popular> popularList = <Popular>[].obs;
-  List upcomingList = <Popular>[].obs;
-  List nowPlayingList = <Popular>[].obs;
+  List<Upcoming> upcomingList = <Upcoming>[].obs;
+  List<NowPlaying> nowPlayingList = <NowPlaying>[].obs;
 
   int nowPlayingPage = 1;
-  int popularPage = 2;
-  int upcomingPage = 3;
+  int popularPage = 1;
+  int upcomingPage = 1;
 
   final dio = Dio();
 
@@ -43,7 +45,7 @@ class MovieController extends GetxController {
     dio.get("${BaseUrl.uriUpcoming}&page=$page").then((value) {
       var upcomings = value.data['results'];
       for (Map i in upcomings) {
-        upcomingList.add(Popular.fromMap(i as Map<String, dynamic>));
+        upcomingList.add(Upcoming.fromMap(i as Map<String, dynamic>));
       }
     });
   }
@@ -58,7 +60,7 @@ class MovieController extends GetxController {
     dio.get("${BaseUrl.uriNowPlaying}&page=$page").then((value) {
       var nowPlayings = value.data['results'];
       for (Map i in nowPlayings) {
-        nowPlayingList.add(Popular.fromMap(i as Map<String, dynamic>));
+        nowPlayingList.add(NowPlaying.fromMap(i as Map<String, dynamic>));
       }
     });
   }
