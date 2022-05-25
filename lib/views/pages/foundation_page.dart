@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-import 'package:youtap_movie/views/pages/movie_page.dart';
-import 'package:youtap_movie/views/pages/profile_page.dart';
-import 'package:youtap_movie/views/pages/tv_page.dart';
+import 'package:dpilem/views/pages/movie_page.dart';
+import 'package:dpilem/views/pages/profile_page.dart';
+import 'package:dpilem/views/pages/tv_page.dart';
 
 class FoundationPage extends StatefulWidget {
   const FoundationPage({Key? key}) : super(key: key);

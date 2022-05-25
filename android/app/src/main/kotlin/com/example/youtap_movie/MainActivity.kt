@@ -1,4 +1,4 @@
-package com.example.youtap_movie
+package com.example.dpilem
 
 import io.flutter.embedding.android.FlutterActivity
 

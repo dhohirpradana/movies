@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
-import 'package:youtap_movie/statics/api.dart';
+import 'package:dpilem/statics/api.dart';
 import '../../controllers/movie_controller.dart';
 
 class UpcomingWidget extends StatefulWidget {

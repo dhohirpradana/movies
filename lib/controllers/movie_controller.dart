@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:youtap_movie/models/movie/popular_model.dart';
+import 'package:dpilem/models/movie/popular_model.dart';
 
 import '../statics/api.dart';
 
