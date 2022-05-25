@@ -5,11 +5,13 @@ class UpcomingModel {
   final bool adult;
   final String title;
   final double voteAverage;
+  final String posterPath;
   UpcomingModel({
     required this.id,
     required this.adult,
     required this.title,
     required this.voteAverage,
+    required this.posterPath,
   });
 
   UpcomingModel copyWith({
@@ -17,12 +19,14 @@ class UpcomingModel {
     bool? adult,
     String? title,
     double? voteAverage,
+    String? posterPath,
   }) {
     return UpcomingModel(
       id: id ?? this.id,
       adult: adult ?? this.adult,
       title: title ?? this.title,
       voteAverage: voteAverage ?? this.voteAverage,
+      posterPath: posterPath ?? this.posterPath,
     );
   }
 
@@ -32,6 +36,7 @@ class UpcomingModel {
       'adult': adult,
       'title': title,
       'voteAverage': voteAverage,
+      'posterPath': posterPath,
     };
   }
 
@@ -41,6 +46,7 @@ class UpcomingModel {
       adult: map['adult'] ?? false,
       title: map['title'] ?? '',
       voteAverage: map['voteAverage']?.toDouble() ?? 0.0,
+      posterPath: map['poster_path'] ?? '',
     );
   }
 
@@ -51,7 +57,7 @@ class UpcomingModel {
 
   @override
   String toString() {
-    return 'UpcomingModel(id: $id, adult: $adult, title: $title, voteAverage: $voteAverage)';
+    return 'UpcomingModel(id: $id, adult: $adult, title: $title, voteAverage: $voteAverage, posterPath: $posterPath)';
   }
 
   @override
@@ -62,11 +68,16 @@ class UpcomingModel {
         other.id == id &&
         other.adult == adult &&
         other.title == title &&
-        other.voteAverage == voteAverage;
+        other.voteAverage == voteAverage &&
+        other.posterPath == posterPath;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^ adult.hashCode ^ title.hashCode ^ voteAverage.hashCode;
+    return id.hashCode ^
+        adult.hashCode ^
+        title.hashCode ^
+        voteAverage.hashCode ^
+        posterPath.hashCode;
   }
 }
