@@ -1,6 +1,6 @@
-import 'package:dpilem/views/widget/tv/on_the_air_tv_widget.dart';
-import 'package:dpilem/views/widget/tv/popular_tv_widget.dart';
-import 'package:dpilem/views/widget/search_widget.dart';
+import 'package:dpilem/views/components/tv/on_the_air_tv_widget.dart';
+import 'package:dpilem/views/components/tv/popular_tv_widget.dart';
+import 'package:dpilem/views/components/search_widget.dart';
 import 'package:flutter/material.dart';
 
 class TVPage extends StatelessWidget {

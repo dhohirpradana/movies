@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dpilem/views/widget/movie/now_playing_movie_widget.dart';
-import 'package:dpilem/views/widget/movie/popular_movie_widget.dart';
-import 'package:dpilem/views/widget/search_widget.dart';
-import 'package:dpilem/views/widget/movie/upcoming_movie_widget.dart';
+import 'package:dpilem/views/components/movie/now_playing_movie_widget.dart';
+import 'package:dpilem/views/components/movie/popular_movie_widget.dart';
+import 'package:dpilem/views/components/search_widget.dart';
+import 'package:dpilem/views/components/movie/upcoming_movie_widget.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({Key? key}) : super(key: key);

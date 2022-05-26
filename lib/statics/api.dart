@@ -4,8 +4,16 @@ class BaseUrl {
 
   static String tmdbImage = "https://image.tmdb.org/t/p/original";
 
+  static String tmdbSession =
+      "$tmdb/authentication/token/new?api_key=4a8d660fdeebedfe22bc20d751c367ac";
+
   // Account
   static String detailAccount = "$tmdb/account?api_key=$apiKey";
+  static String login(String reqToken, String username, String password) {
+    final url =
+        "$tmdb/authentication/token/validate_with_login?api_key=$apiKey&request_token=$reqToken&username=$username&password=$password";
+    return url;
+  }
 
   // Movies
   static String popularMovie = "$tmdb/movie/popular?api_key=$apiKey";

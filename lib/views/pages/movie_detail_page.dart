@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dpilem/views/widget/star_widget.dart';
+import 'package:dpilem/views/components/star_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/movie_controller.dart';
 import '../../statics/api.dart';
-import '../widget/movie/reviews_movie_widget.dart';
+import '../components/movie/reviews_movie_widget.dart';
 
 class MovieDetailPage extends StatefulWidget {
   final int id;
@@ -137,6 +137,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                               const SizedBox(height: 14),
                               const Text(
                                 "Overview",
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
                               ),

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dpilem/views/pages/movie_detail_page.dart';
-import 'package:dpilem/views/widget/star_widget.dart';
+import 'package:dpilem/views/components/star_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';

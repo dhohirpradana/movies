@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dpilem/controllers/tv_controller.dart';
-import 'package:dpilem/views/widget/tv/reviews_tv_widget.dart';
-import 'package:dpilem/views/widget/star_widget.dart';
+import 'package:dpilem/views/components/tv/reviews_tv_widget.dart';
+import 'package:dpilem/views/components/star_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -140,6 +140,7 @@ class _TVDetailPageState extends State<TVDetailPage> {
                               const SizedBox(height: 14),
                               const Text(
                                 "Overview",
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                     fontSize: 20, fontWeight: FontWeight.w500),
                               ),

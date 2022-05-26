@@ -4,6 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:dpilem/views/pages/foundation_page.dart';
 
+import 'controllers/account_controller.dart';
+
+final _accountController = Get.put(AccountController());
 void main() {
   runApp(const MyApp());
 }
@@ -14,6 +17,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    _accountController.createSession();
     return SkeletonTheme(
       child: GetMaterialApp(
         theme: ThemeData(
