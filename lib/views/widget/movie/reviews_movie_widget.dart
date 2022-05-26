@@ -1,8 +1,9 @@
+import 'package:dpilem/controllers/movie_controller.dart';
 import 'package:dpilem/statics/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/movie_controller.dart';
+import '../../../controllers/movie_controller.dart';
 
 class ReviewsMovieWidget extends StatefulWidget {
   final int id;
@@ -37,7 +38,7 @@ class _ReviewsMovieWidgetState extends State<ReviewsMovieWidget> {
 
   String _avatarUrl(var avatarPath) {
     final String avatar = (avatarPath == null)
-        ? "https://i.pravatar.cc/300"
+        ? "https://i.pravatar.cc/250"
         : (avatarPath.contains("avatar"))
             ? avatarPath.substring(1)
             : "${BaseUrl.tmdbImage}$avatarPath";

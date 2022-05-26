@@ -1,32 +1,31 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dpilem/controllers/tv_controller.dart';
+import 'package:dpilem/views/pages/movie_detail_page.dart';
+import 'package:dpilem/views/widget/star_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
-import '../../controllers/movie_controller.dart';
-import '../pages/tv_detail_page.dart';
-import 'star_widget.dart';
+import '../../../controllers/movie_controller.dart';
 
-class PopularTVWidget extends StatefulWidget {
-  const PopularTVWidget({Key? key}) : super(key: key);
+class NowPlayingMovieWidget extends StatefulWidget {
+  const NowPlayingMovieWidget({Key? key}) : super(key: key);
 
   @override
-  State<PopularTVWidget> createState() => _PopularTVWidgetState();
+  State<NowPlayingMovieWidget> createState() => _NowPlayingMovieWidgetState();
 }
 
-class _PopularTVWidgetState extends State<PopularTVWidget> {
-  final _tvController = Get.put(TVController());
+class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
+  final _movieController = Get.put(MovieController());
   final ScrollController _scrollController = ScrollController();
 
   bool isLoading = false;
 
-  void _getMorePopular() async {
+  void _getMoreNowPlaying() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
-      _tvController.fetchMorePopular();
+      _movieController.fetchMoreNowPlaying();
 
       setState(() {
         isLoading = false;
@@ -40,7 +39,7 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMorePopular();
+        _getMoreNowPlaying();
       }
     });
   }
@@ -55,7 +54,7 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
   Widget build(BuildContext context) {
     return GetX<MovieController>(
       builder: (_) {
-        if (_tvController.popularList.isEmpty) {
+        if (_movieController.nowPlayingList.isEmpty) {
           return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -67,28 +66,28 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
           );
         } else {
           return ListView.builder(
-            key: const PageStorageKey<String>('popular tv controller'),
+            key: const PageStorageKey<String>('now playing controller'),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: _tvController.popularList.length,
+            itemCount: _movieController.nowPlayingList.length,
             itemBuilder: ((context, i) => SizedBox(
-                  height: 300,
+                  height: 250,
                   width: 150,
                   child: InkWell(
-                    onTap: (() => Get.to(() =>
-                        TVDetailPage(id: _tvController.popularList[i].id))),
+                    onTap: (() => Get.to(() => MovieDetailPage(
+                        id: _movieController.nowPlayingList[i].id))),
                     child: Card(
                         child: Stack(
                       children: [
                         CachedNetworkImage(
-                            height: 300,
+                            height: 250,
                             width: 150,
-                            cacheManager: CacheManager(Config("tvimage",
+                            cacheManager: CacheManager(Config("movieimage",
                                 stalePeriod: const Duration(days: 2))),
                             memCacheHeight: 750,
                             fit: BoxFit.cover,
                             imageUrl: BaseUrl.tmdbImage +
-                                _tvController.popularList[i].posterPath,
+                                _movieController.nowPlayingList[i].posterPath,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
                                     child: CircularProgressIndicator(
@@ -98,6 +97,7 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
                         Align(
                             alignment: FractionalOffset.bottomLeft,
                             child: Container(
+                                height: 75,
                                 width: 150,
                                 decoration: const BoxDecoration(
                                     gradient: LinearGradient(
@@ -116,7 +116,7 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        _tvController.popularList[i].name
+                                        _movieController.nowPlayingList[i].title
                                             .toString(),
                                         style: const TextStyle(fontSize: 18),
                                         maxLines: 1,
@@ -129,8 +129,8 @@ class _PopularTVWidgetState extends State<PopularTVWidget> {
                                             size: 16,
                                           ),
                                           child: StarWidget(
-                                              value: _tvController
-                                                      .popularList[i]
+                                              value: _movieController
+                                                      .nowPlayingList[i]
                                                       .voteAverage /
                                                   2)),
                                     ],

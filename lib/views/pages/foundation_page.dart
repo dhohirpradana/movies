@@ -50,7 +50,7 @@ class _FoundationPageState extends State<FoundationPage> {
           ? const MoviePage()
           : (selected == 1)
               ? const TVPage()
-              : const ProfilePage(),
+              : ProfilePage(),
     );
   }
 }

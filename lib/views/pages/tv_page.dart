@@ -1,5 +1,5 @@
-import 'package:dpilem/views/widget/on_the_air_tv_widget.dart';
-import 'package:dpilem/views/widget/popular_tv_widget.dart';
+import 'package:dpilem/views/widget/tv/on_the_air_tv_widget.dart';
+import 'package:dpilem/views/widget/tv/popular_tv_widget.dart';
 import 'package:dpilem/views/widget/search_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class TVPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 300, child: OnTheAirTVWidget()),
+                const SizedBox(height: 250, child: OnTheAirTVWidget()),
 
                 // Popular
                 const SizedBox(height: 16),
@@ -54,7 +54,7 @@ class TVPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 300, child: PopularTVWidget()),
+                const SizedBox(height: 250, child: PopularTVWidget()),
                 const SizedBox(height: 14)
               ],
             ),

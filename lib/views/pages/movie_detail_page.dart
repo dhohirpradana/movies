@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/movie_controller.dart';
 import '../../statics/api.dart';
-import '../widget/reviews_movie_widget.dart';
+import '../widget/movie/reviews_movie_widget.dart';
 
 class MovieDetailPage extends StatefulWidget {
   final int id;

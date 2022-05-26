@@ -4,6 +4,9 @@ class BaseUrl {
 
   static String tmdbImage = "https://image.tmdb.org/t/p/original";
 
+  // Account
+  static String detailAccount = "$tmdb/account?api_key=$apiKey";
+
   // Movies
   static String popularMovie = "$tmdb/movie/popular?api_key=$apiKey";
   static String upcomingMovie = "$tmdb/movie/upcoming?api_key=$apiKey";

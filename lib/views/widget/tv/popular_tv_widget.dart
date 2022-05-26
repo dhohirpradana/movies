@@ -1,32 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dpilem/controllers/tv_controller.dart';
-import 'package:dpilem/views/pages/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
-import '../../controllers/movie_controller.dart';
-import 'star_widget.dart';
+import '../../../controllers/movie_controller.dart';
+import '../../pages/tv_detail_page.dart';
+import '../star_widget.dart';
 
-class OnTheAirTVWidget extends StatefulWidget {
-  const OnTheAirTVWidget({Key? key}) : super(key: key);
+class PopularTVWidget extends StatefulWidget {
+  const PopularTVWidget({Key? key}) : super(key: key);
 
   @override
-  State<OnTheAirTVWidget> createState() => _OnTheAirTVWidgetState();
+  State<PopularTVWidget> createState() => _PopularTVWidgetState();
 }
 
-class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
+class _PopularTVWidgetState extends State<PopularTVWidget> {
   final _tvController = Get.put(TVController());
   final ScrollController _scrollController = ScrollController();
 
   bool isLoading = false;
 
-  void _getMoreOnTheAir() async {
+  void _getMorePopular() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
-      _tvController.fetchMoreOnTheAir();
+      _tvController.fetchMorePopular();
 
       setState(() {
         isLoading = false;
@@ -40,7 +40,7 @@ class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMoreOnTheAir();
+        _getMorePopular();
       }
     });
   }
@@ -55,7 +55,7 @@ class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
   Widget build(BuildContext context) {
     return GetX<MovieController>(
       builder: (_) {
-        if (_tvController.onTheAirList.isEmpty) {
+        if (_tvController.popularList.isEmpty) {
           return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -67,28 +67,28 @@ class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
           );
         } else {
           return ListView.builder(
-            key: const PageStorageKey<String>('on the air tv controller'),
+            key: const PageStorageKey<String>('popular tv controller'),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: _tvController.onTheAirList.length,
+            itemCount: _tvController.popularList.length,
             itemBuilder: ((context, i) => SizedBox(
-                  height: 300,
+                  height: 250,
                   width: 150,
                   child: InkWell(
                     onTap: (() => Get.to(() =>
-                        TVDetailPage(id: _tvController.onTheAirList[i].id))),
+                        TVDetailPage(id: _tvController.popularList[i].id))),
                     child: Card(
                         child: Stack(
                       children: [
                         CachedNetworkImage(
-                            height: 300,
+                            height: 250,
                             width: 150,
                             cacheManager: CacheManager(Config("tvimage",
                                 stalePeriod: const Duration(days: 2))),
                             memCacheHeight: 750,
                             fit: BoxFit.cover,
                             imageUrl: BaseUrl.tmdbImage +
-                                _tvController.onTheAirList[i].posterPath,
+                                _tvController.popularList[i].posterPath,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
                                     child: CircularProgressIndicator(
@@ -116,7 +116,7 @@ class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        _tvController.onTheAirList[i].name
+                                        _tvController.popularList[i].name
                                             .toString(),
                                         style: const TextStyle(fontSize: 18),
                                         maxLines: 1,
@@ -130,7 +130,7 @@ class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
                                           ),
                                           child: StarWidget(
                                               value: _tvController
-                                                      .onTheAirList[i]
+                                                      .popularList[i]
                                                       .voteAverage /
                                                   2)),
                                     ],

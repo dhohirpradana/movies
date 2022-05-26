@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dpilem/controllers/tv_controller.dart';
-import 'package:dpilem/views/widget/reviews_tv_widget.dart';
+import 'package:dpilem/views/widget/tv/reviews_tv_widget.dart';
 import 'package:dpilem/views/widget/star_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

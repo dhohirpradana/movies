@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dpilem/views/widget/now_playing_widget.dart';
-import 'package:dpilem/views/widget/popular_movie_widget.dart';
+import 'package:dpilem/views/widget/movie/now_playing_movie_widget.dart';
+import 'package:dpilem/views/widget/movie/popular_movie_widget.dart';
 import 'package:dpilem/views/widget/search_widget.dart';
-import 'package:dpilem/views/widget/upcoming_movie_widget.dart';
+import 'package:dpilem/views/widget/movie/upcoming_movie_widget.dart';
 
 class MoviePage extends StatelessWidget {
   const MoviePage({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class MoviePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 300, child: NowPlayingMovieWidget()),
+                const SizedBox(height: 250, child: NowPlayingMovieWidget()),
 
                 // Popular
                 const SizedBox(height: 16),
@@ -57,7 +57,7 @@ class MoviePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 300, child: PopularMovieWidget()),
+                const SizedBox(height: 250, child: PopularMovieWidget()),
 
                 // Upcoming
                 const SizedBox(height: 16),
@@ -70,7 +70,7 @@ class MoviePage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const SizedBox(height: 300, child: UpcomingMovieWidget()),
+                const SizedBox(height: 250, child: UpcomingMovieWidget()),
                 const SizedBox(height: 14)
               ],
             ),

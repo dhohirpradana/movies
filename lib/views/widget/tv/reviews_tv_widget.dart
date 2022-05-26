@@ -2,7 +2,7 @@ import 'package:dpilem/statics/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/tv_controller.dart';
+import '../../../controllers/tv_controller.dart';
 
 class ReviewsTVWidget extends StatefulWidget {
   final int id;
@@ -37,7 +37,7 @@ class _ReviewsTVWidgetState extends State<ReviewsTVWidget> {
 
   String _avatarUrl(var avatarPath) {
     final String avatar = (avatarPath == null)
-        ? "https://i.pravatar.cc/300"
+        ? "https://i.pravatar.cc/250"
         : (avatarPath.contains("avatar"))
             ? avatarPath.substring(1)
             : "${BaseUrl.tmdbImage}$avatarPath";

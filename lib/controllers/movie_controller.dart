@@ -28,7 +28,7 @@ class MovieController extends GetxController {
     super.onInit();
   }
 
-  void _fetchPopular(int page) async {
+  void _fetchPopular(int page) {
     dio.get("${BaseUrl.popularMovie}&page=$page").then((value) {
       var populars = value.data['results'];
       for (Map i in populars) {

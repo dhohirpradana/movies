@@ -1,31 +1,32 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dpilem/views/pages/movie_detail_page.dart';
-import 'package:dpilem/views/widget/star_widget.dart';
+import 'package:dpilem/controllers/tv_controller.dart';
+import 'package:dpilem/views/pages/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:get/get.dart';
 import 'package:dpilem/statics/api.dart';
-import '../../controllers/movie_controller.dart';
+import '../../../controllers/movie_controller.dart';
+import '../star_widget.dart';
 
-class NowPlayingMovieWidget extends StatefulWidget {
-  const NowPlayingMovieWidget({Key? key}) : super(key: key);
+class OnTheAirTVWidget extends StatefulWidget {
+  const OnTheAirTVWidget({Key? key}) : super(key: key);
 
   @override
-  State<NowPlayingMovieWidget> createState() => _NowPlayingMovieWidgetState();
+  State<OnTheAirTVWidget> createState() => _OnTheAirTVWidgetState();
 }
 
-class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
-  final _movieController = Get.put(MovieController());
+class _OnTheAirTVWidgetState extends State<OnTheAirTVWidget> {
+  final _tvController = Get.put(TVController());
   final ScrollController _scrollController = ScrollController();
 
   bool isLoading = false;
 
-  void _getMoreNowPlaying() async {
+  void _getMoreOnTheAir() async {
     if (!isLoading) {
       setState(() {
         isLoading = true;
       });
-      _movieController.fetchMoreNowPlaying();
+      _tvController.fetchMoreOnTheAir();
 
       setState(() {
         isLoading = false;
@@ -39,7 +40,7 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _getMoreNowPlaying();
+        _getMoreOnTheAir();
       }
     });
   }
@@ -54,7 +55,7 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
   Widget build(BuildContext context) {
     return GetX<MovieController>(
       builder: (_) {
-        if (_movieController.nowPlayingList.isEmpty) {
+        if (_tvController.onTheAirList.isEmpty) {
           return ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
@@ -66,28 +67,28 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
           );
         } else {
           return ListView.builder(
-            key: const PageStorageKey<String>('now playing controller'),
+            key: const PageStorageKey<String>('on the air tv controller'),
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            itemCount: _movieController.nowPlayingList.length,
+            itemCount: _tvController.onTheAirList.length,
             itemBuilder: ((context, i) => SizedBox(
-                  height: 300,
+                  height: 250,
                   width: 150,
                   child: InkWell(
-                    onTap: (() => Get.to(() => MovieDetailPage(
-                        id: _movieController.nowPlayingList[i].id))),
+                    onTap: (() => Get.to(() =>
+                        TVDetailPage(id: _tvController.onTheAirList[i].id))),
                     child: Card(
                         child: Stack(
                       children: [
                         CachedNetworkImage(
-                            height: 300,
+                            height: 250,
                             width: 150,
-                            cacheManager: CacheManager(Config("movieimage",
+                            cacheManager: CacheManager(Config("tvimage",
                                 stalePeriod: const Duration(days: 2))),
                             memCacheHeight: 750,
                             fit: BoxFit.cover,
                             imageUrl: BaseUrl.tmdbImage +
-                                _movieController.nowPlayingList[i].posterPath,
+                                _tvController.onTheAirList[i].posterPath,
                             progressIndicatorBuilder:
                                 (context, url, downloadProgress) => Center(
                                     child: CircularProgressIndicator(
@@ -97,7 +98,6 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
                         Align(
                             alignment: FractionalOffset.bottomLeft,
                             child: Container(
-                                height: 75,
                                 width: 150,
                                 decoration: const BoxDecoration(
                                     gradient: LinearGradient(
@@ -116,7 +116,7 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Text(
-                                        _movieController.nowPlayingList[i].title
+                                        _tvController.onTheAirList[i].name
                                             .toString(),
                                         style: const TextStyle(fontSize: 18),
                                         maxLines: 1,
@@ -129,8 +129,8 @@ class _NowPlayingMovieWidgetState extends State<NowPlayingMovieWidget> {
                                             size: 16,
                                           ),
                                           child: StarWidget(
-                                              value: _movieController
-                                                      .nowPlayingList[i]
+                                              value: _tvController
+                                                      .onTheAirList[i]
                                                       .voteAverage /
                                                   2)),
                                     ],
