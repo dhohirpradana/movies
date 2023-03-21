@@ -30,7 +30,7 @@ dependencies:
   cached_network_image: ^3.2.1
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
-  dio: 4.0.6
+  dio: ^5.0.3
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.3.0
